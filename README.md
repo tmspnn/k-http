@@ -11,6 +11,17 @@ npm install k-http
 <script src="node_modules/k-http/dist/k-http.min.js"></script>
 ```
 
+## QuickStart
+```javascript
+import kHttp from 'k-http'
+
+kHttp
+    .get('/example.json')
+    .then(o => console.log(Object.keys(o))) // o will be the parsed object
+    .catch(e => console.error(e)) // e will be the responseText or status code
+    .finally(() => console.log('http request finished'))
+```
+
 ## Methods
 - ```get(url: String, [options: Object])```
 
@@ -25,3 +36,5 @@ npm install k-http
 - ```catch(h: Function)```
 
 - ```finally(h: Function)```
+
+```options``` are the same as ```k-xhr```
