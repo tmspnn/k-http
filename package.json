@@ -1,6 +1,6 @@
 {
   "name": "k-http",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Easy http based on k-xhr",
   "main": "dist/k-http.cjs.js",
   "jsnext:main": "k-http.js",
@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "k-util": "^0.1.3",
-    "k-xhr": "^0.1.1"
+    "k-xhr": "^0.1.2"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
