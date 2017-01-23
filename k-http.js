@@ -1,7 +1,7 @@
 import { assign, isJSON, isObject } from 'k-util'
 import kXhr from 'k-xhr'
 
-const http = {
+export default {
   get(url, options) {
     return this.receive(url, 'get', options)
   },
@@ -41,5 +41,3 @@ const http = {
     return this.receive(url, method, options)
   }
 }
-
-export default http
