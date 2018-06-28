@@ -2,7 +2,7 @@
   "name": "k-http",
   "version": "0.2.0",
   "description": "Easy http based on k-xhr",
-  "main": "src/k-http.ts",
+  "main": "dist/k-http.js",
   "jsnext:main": "k-http.js",
   "scripts": {
     "build": "tsc && NODE_ENV=production webpack",
