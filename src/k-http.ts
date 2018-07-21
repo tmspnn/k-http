@@ -1,13 +1,13 @@
 import kXhr from "k-xhr";
 
+interface HttpOptions {
+  withCredentials?: boolean | string;
+  onprogress?: (e: Event) => void;
+  headers?: { [key: string]: any };
+}
+
 export default {
-  get(
-    url: string,
-    options?: {
-      withCredentials?: boolean | string;
-      onprogress?: (e: Event) => void;
-    }
-  ): any {
+  get(url: string, options?: HttpOptions): any {
     const xhrOptions = Object.assign({ url }, options);
     return kXhr(xhrOptions).then(
       (res: string) => (jsonLike(res) ? JSON.parse(res) : res)
@@ -17,10 +17,7 @@ export default {
   post(
     url: string,
     data?: Document | FormData | ReadableStream | Blob | null,
-    options?: {
-      withCredentials?: boolean | string;
-      onprogress?: (e: Event) => void;
-    }
+    options?: HttpOptions
   ): any {
     return send(url, "post", data, options);
   },
@@ -28,15 +25,12 @@ export default {
   put(
     url: string,
     data?: Document | FormData | ReadableStream | Blob | null,
-    options?: {
-      withCredentials?: boolean | string;
-      onprogress?: (e: Event) => void;
-    }
+    options?: HttpOptions
   ): any {
     return send(url, "put", data, options);
   },
 
-  del(url: string, options?: { withCredentials?: boolean | string }): any {
+  del(url: string, options?: HttpOptions): any {
     return kXhr(Object.assign({ url, method: "delete" }, options)).then(
       (res: string) => (jsonLike(res) ? JSON.parse(res) : res)
     );
@@ -52,10 +46,7 @@ function send(
   url: string,
   method: string,
   data?: Document | FormData | ReadableStream | Blob | null,
-  options?: {
-    withCredentials?: boolean | string;
-    onprogress?: (e: Event) => void;
-  }
+  options?: HttpOptions
 ): any {
   const xhrOptions = Object.assign({ url, method }, options);
   if (data instanceof Object && data.constructor == Object) {

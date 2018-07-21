@@ -1,32 +1,23 @@
 export as namespace kHttp;
 
-export function get(
-  url: string,
-  options?: {
-    withCredentials?: boolean | string;
-    onprogress?: (e: Event) => void;
-  }
-): any;
+interface HttpOptions {
+  withCredentials?: boolean | string;
+  onprogress?: (e: Event) => void;
+  headers?: { [key: string]: any };
+}
+
+export function get(url: string, options?: HttpOptions): any;
 
 export function post(
   url: string,
   data?: Document | FormData | ReadableStream | Blob | null,
-  options?: {
-    withCredentials?: boolean | string;
-    onprogress?: (e: Event) => void;
-  }
+  options?: HttpOptions
 ): any;
 
 export function put(
   url: string,
   data?: Document | FormData | ReadableStream | Blob | null,
-  options?: {
-    withCredentials?: boolean | string;
-    onprogress?: (e: Event) => void;
-  }
+  options?: HttpOptions
 ): any;
 
-export function del(
-  url: string,
-  options?: { withCredentials?: boolean | string }
-): any;
+export function del(url: string, options?: HttpOptions): any;
