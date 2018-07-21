@@ -1,4 +1,4 @@
-export = kHttp;
+export as namespace kHttp;
 
 export function get(
   url: string,
@@ -26,4 +26,7 @@ export function put(
   }
 ): any;
 
-export function del(url: string, options?: { withCredentials?: boolean | string }): any;
+export function del(
+  url: string,
+  options?: { withCredentials?: boolean | string }
+): any;

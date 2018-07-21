@@ -1,4 +1,4 @@
-import kXhr from 'k-xhr';
+import kXhr from "k-xhr";
 
 export default {
   get(
@@ -9,7 +9,9 @@ export default {
     }
   ): any {
     const xhrOptions = Object.assign({ url }, options);
-    return kXhr(xhrOptions).then((res: string) => (jsonLike(res) ? JSON.parse(res) : res));
+    return kXhr(xhrOptions).then(
+      (res: string) => (jsonLike(res) ? JSON.parse(res) : res)
+    );
   },
 
   post(
@@ -20,7 +22,7 @@ export default {
       onprogress?: (e: Event) => void;
     }
   ): any {
-    return send(url, 'post', data, options);
+    return send(url, "post", data, options);
   },
 
   put(
@@ -31,11 +33,11 @@ export default {
       onprogress?: (e: Event) => void;
     }
   ): any {
-    return send(url, 'put', data, options);
+    return send(url, "put", data, options);
   },
 
   del(url: string, options?: { withCredentials?: boolean | string }): any {
-    return kXhr(Object.assign({ url, method: 'delete' }, options)).then(
+    return kXhr(Object.assign({ url, method: "delete" }, options)).then(
       (res: string) => (jsonLike(res) ? JSON.parse(res) : res)
     );
   }
@@ -43,7 +45,7 @@ export default {
 
 function jsonLike(s: string): boolean {
   const char0 = s.charAt(0);
-  return char0 == '{' || char0 == '[';
+  return char0 == "{" || char0 == "[";
 }
 
 function send(
@@ -58,9 +60,11 @@ function send(
   const xhrOptions = Object.assign({ url, method }, options);
   if (data instanceof Object && data.constructor == Object) {
     Object.assign(xhrOptions, {
-      contentType: 'application/json',
+      contentType: "application/json",
       data: JSON.stringify(data)
     });
   }
-  return kXhr(xhrOptions).then((res: string) => (jsonLike(res) ? JSON.parse(res) : res));
+  return kXhr(xhrOptions).then(
+    (res: string) => (jsonLike(res) ? JSON.parse(res) : res)
+  );
 }
