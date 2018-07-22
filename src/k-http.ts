@@ -55,7 +55,12 @@ function send(
       data: JSON.stringify(data)
     });
   }
-  return kXhr(xhrOptions).then(
-    (res: string) => (jsonLike(res) ? JSON.parse(res) : res)
-  );
+  const xhr = kXhr(xhrOptions) as any;
+  return xhr
+    .then((res: string) => (jsonLike(res) ? JSON.parse(res) : res))
+    .catch((e: any) => {
+      if (jsonLike(e)) {
+        xhr.error = JSON.parse(e);
+      }
+    });
 }
