@@ -31,6 +31,13 @@ function send(url, method, data, options) {
             data: JSON.stringify(data)
         });
     }
-    return k_xhr_1.default(xhrOptions).then(function (res) { return (jsonLike(res) ? JSON.parse(res) : res); });
+    var xhr = k_xhr_1.default(xhrOptions);
+    return xhr
+        .then(function (res) { return (jsonLike(res) ? JSON.parse(res) : res); })
+        .catch(function (e) {
+        if (jsonLike(e)) {
+            xhr.error = JSON.parse(e);
+        }
+    });
 }
 //# sourceMappingURL=k-http.js.map
