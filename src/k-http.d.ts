@@ -10,7 +10,13 @@ export function get(url: string, options?: HttpOptions): any;
 
 export function post(
   url: string,
-  data?: Document | FormData | ReadableStream | Blob | null,
+  data?:
+    | Document
+    | FormData
+    | ReadableStream
+    | Blob
+    | { [key: string]: any }
+    | null,
   options?: HttpOptions
 ): any;
 
