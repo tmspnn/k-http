@@ -45,7 +45,13 @@ function jsonLike(s: string): boolean {
 function send(
   url: string,
   method: string,
-  data?: Document | FormData | ReadableStream | Blob | null,
+  data?:
+    | Document
+    | FormData
+    | ReadableStream
+    | Blob
+    | { [key: string]: any }
+    | null,
   options?: HttpOptions
 ): any {
   const xhrOptions = Object.assign({ url, method }, options);
