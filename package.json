@@ -1,6 +1,6 @@
 {
   "name": "k-http",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Easy http based on k-xhr",
   "main": "dist/k-http.js",
   "types": "src/k-http.d.ts",
