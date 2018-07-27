@@ -65,7 +65,7 @@ function send(
   return xhr
     .then((res: string) => (jsonLike(res) ? JSON.parse(res) : res))
     .catch((e: any) => {
-      if (jsonLike(e)) {
+      if (typeof e == "string" && jsonLike(e)) {
         xhr.error = JSON.parse(e);
       }
     });
