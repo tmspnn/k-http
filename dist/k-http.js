@@ -35,7 +35,7 @@ function send(url, method, data, options) {
     return xhr
         .then(function (res) { return (jsonLike(res) ? JSON.parse(res) : res); })
         .catch(function (e) {
-        if (jsonLike(e)) {
+        if (typeof e == "string" && jsonLike(e)) {
             xhr.error = JSON.parse(e);
         }
     });
