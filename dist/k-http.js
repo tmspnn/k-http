@@ -24,7 +24,7 @@ function jsonLike(s) {
     return char0 == "{" || char0 == "[";
 }
 function send(url, method, data, options) {
-    var xhrOptions = Object.assign({ url: url, method: method }, options);
+    var xhrOptions = Object.assign({ url: url, method: method, data: data }, options);
     if (data instanceof Object && data.constructor == Object) {
         Object.assign(xhrOptions, {
             contentType: "application/json",

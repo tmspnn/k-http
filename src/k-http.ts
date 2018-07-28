@@ -54,14 +54,14 @@ function send(
     | null,
   options?: HttpOptions
 ): any {
-  const xhrOptions = Object.assign({ url, method }, options);
+  const xhrOptions = Object.assign({ url, method, data }, options);
   if (data instanceof Object && data.constructor == Object) {
     Object.assign(xhrOptions, {
       contentType: "application/json",
       data: JSON.stringify(data)
     });
   }
-  const xhr = kXhr(xhrOptions) as any;
+  const xhr = kXhr(xhrOptions as any) as any;
   return xhr
     .then((res: string) => (jsonLike(res) ? JSON.parse(res) : res))
     .catch((e: any) => {
