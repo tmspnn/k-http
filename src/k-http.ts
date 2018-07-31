@@ -16,7 +16,13 @@ export default {
 
   post(
     url: string,
-    data?: Document | FormData | ReadableStream | Blob | null,
+    data?:
+      | Document
+      | FormData
+      | ReadableStream
+      | Blob
+      | { [key: string]: any }
+      | null,
     options?: HttpOptions
   ): any {
     return send(url, "post", data, options);
@@ -24,7 +30,13 @@ export default {
 
   put(
     url: string,
-    data?: Document | FormData | ReadableStream | Blob | null,
+    data?:
+      | Document
+      | FormData
+      | ReadableStream
+      | Blob
+      | { [key: string]: any }
+      | null,
     options?: HttpOptions
   ): any {
     return send(url, "put", data, options);

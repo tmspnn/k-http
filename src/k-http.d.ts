@@ -22,7 +22,13 @@ export function post(
 
 export function put(
   url: string,
-  data?: Document | FormData | ReadableStream | Blob | null,
+  data?:
+    | Document
+    | FormData
+    | ReadableStream
+    | Blob
+    | { [key: string]: any }
+    | null,
   options?: HttpOptions
 ): any;
 
