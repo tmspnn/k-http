@@ -2,7 +2,7 @@ import kXhr from "k-xhr";
 
 interface HttpOptions {
   withCredentials?: boolean | string;
-  onprogress?: (e: Event) => void;
+  onprogress?: (e: ProgressEvent) => void;
   headers?: { [key: string]: any };
 }
 

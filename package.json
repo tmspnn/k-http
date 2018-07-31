@@ -1,6 +1,6 @@
 {
   "name": "k-http",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Easy http based on k-xhr",
   "main": "dist/k-http.js",
   "types": "src/k-http.d.ts",
@@ -18,13 +18,16 @@
   "author": "Thomas Peng",
   "license": "MIT",
   "dependencies": {
-    "k-xhr": "^0.2.1"
+    "k-xhr": "^0.2.2"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.0.0",
     "jest": "^23.1.0",
     "jsdom": "^11.11.0",
     "source-map-loader": "^0.2.3",
-    "typescript": "^2.9.1"
+    "typescript": "^2.9.2"
+  },
+  "jest": {
+    "testURL": "http://localhost"
   }
 }
