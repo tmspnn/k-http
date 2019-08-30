@@ -1,27 +1,26 @@
-'use strict';
-
 module.exports = {
-  entry: __dirname + '/src/k-http.ts',
-  mode: 'production',
+  mode: "production",
+  devtool: "cheap-eval-source-map",
+  entry: __dirname + "/src/k-http.ts",
   output: {
-    path: __dirname + '/dist',
-    filename: 'k-http.min.js',
-    library: 'kHttp',
-    libraryExport: 'default',
-    libraryTarget: 'umd'
+    path: __dirname + "/dist",
+    filename: "k-http.js",
+    library: "kHttp",
+    libraryExport: "default",
+    libraryTarget: "umd",
+    globalObject: "this"
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
-        loader: 'awesome-typescript-loader'
+        loader: "awesome-typescript-loader"
       },
       {
-        enforce: 'pre',
+        enforce: "pre",
         test: /\.js$/,
-        loader: 'source-map-loader'
+        loader: "source-map-loader"
       }
     ]
-  },
-  devtool: '#nosources-source-map'
+  }
 };

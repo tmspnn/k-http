@@ -1,84 +1,92 @@
-import kXhr from "k-xhr";
+import { parseJSON } from "k-util";
+import Kxhr from "k-xhr";
 
 interface HttpOptions {
-  withCredentials?: boolean | string;
-  onprogress?: (e: ProgressEvent) => void;
-  headers?: { [key: string]: any };
+  withCredentials?: boolean;
+  onProgress?: (e: ProgressEvent) => void;
+  headers?: { [key: string]: string };
 }
+
+type Data =
+  | Document
+  | FormData
+  | ReadableStream
+  | Blob
+  | BufferSource
+  | URLSearchParams
+  | string
+  | null;
 
 export default {
-  get(url: string, options?: HttpOptions): any {
-    const xhrOptions = Object.assign({ url }, options);
-    return kXhr(xhrOptions).then(
-      (res: string) => (jsonLike(res) ? JSON.parse(res) : res)
-    );
+  get(url: string, options?: HttpOptions) {
+    return this.getJSON(url, "get", options);
   },
 
-  post(
+  head(url: string, options?: HttpOptions) {
+    return new Kxhr({ url, method: "get", ...options });
+  },
+
+  post(url: string, data: Data = null, options?: HttpOptions) {
+    return this.send(url, "post", data, options);
+  },
+
+  put(url: string, data: Data = null, options?: HttpOptions) {
+    return this.send(url, "put", data, options);
+  },
+
+  patch(url: string, data: Data = null, options?: HttpOptions) {
+    return this.send(url, "patch", data, options);
+  },
+
+  del(url: string, options: HttpOptions) {
+    return this.getJSON(url, "delete", options);
+  },
+
+  connect(url: string, options: HttpOptions) {
+    return this.getJSON(url, "connect", options);
+  },
+
+  options(url: string, options: HttpOptions) {
+    return this.getJSON(url, "options", options);
+  },
+
+  trace(url: string, options: HttpOptions) {
+    return new Kxhr({ url, method: "delete", ...options });
+  },
+
+  getJSON(
     url: string,
-    data?:
-      | Document
-      | FormData
-      | ReadableStream
-      | Blob
-      | { [key: string]: any }
-      | null,
+    method: "get" | "delete" | "connect" | "options",
     options?: HttpOptions
-  ): any {
-    return send(url, "post", data, options);
+  ): Kxhr {
+    return new Kxhr({ url, method, ...options }).then((resText: string) => {
+      return parseJSON(resText) || resText;
+    });
   },
 
-  put(
-    url: string,
-    data?:
-      | Document
-      | FormData
-      | ReadableStream
-      | Blob
-      | { [key: string]: any }
-      | null,
-    options?: HttpOptions
-  ): any {
-    return send(url, "put", data, options);
-  },
-
-  del(url: string, options?: HttpOptions): any {
-    return kXhr(Object.assign({ url, method: "delete" }, options)).then(
-      (res: string) => (jsonLike(res) ? JSON.parse(res) : res)
-    );
+  send(url: string, method: "post" | "put" | "patch", data: Data, options?: HttpOptions): Kxhr {
+    const xhrOptions = {
+      url,
+      method,
+      data,
+      contentType: "application/x-www-form-urlencoded",
+      ...options
+    };
+    if (data) {
+      xhrOptions.contentType =
+        data.constructor == Document
+          ? "text/html"
+          : data.constructor == FormData
+          ? "multipart/form-data"
+          : data.constructor == ReadableStream
+          ? "application/octet-stream"
+          : "application/json";
+    }
+    if (xhrOptions.contentType == "application/json") {
+      xhrOptions.data = JSON.stringify(xhrOptions.data);
+    }
+    return new Kxhr(xhrOptions).then((resText: string) => {
+      return parseJSON(resText) || resText;
+    });
   }
 };
-
-function jsonLike(s: string): boolean {
-  const char0 = s.charAt(0);
-  return char0 == "{" || char0 == "[";
-}
-
-function send(
-  url: string,
-  method: string,
-  data?:
-    | Document
-    | FormData
-    | ReadableStream
-    | Blob
-    | { [key: string]: any }
-    | null,
-  options?: HttpOptions
-): any {
-  const xhrOptions = Object.assign({ url, method, data }, options);
-  if (data instanceof Object && data.constructor == Object) {
-    Object.assign(xhrOptions, {
-      contentType: "application/json",
-      data: JSON.stringify(data)
-    });
-  }
-  const xhr = kXhr(xhrOptions as any) as any;
-  return xhr
-    .then((res: string) => (jsonLike(res) ? JSON.parse(res) : res))
-    .catch((e: any) => {
-      if (typeof e == "string" && jsonLike(e)) {
-        xhr.error = JSON.parse(e);
-      }
-    });
-}
