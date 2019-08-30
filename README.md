@@ -1,40 +1,63 @@
 # k-http
+
 Easy http based on k-xhr
 
 ## Installation
-#### Node
+
 ```
 npm install k-http
 ```
-#### Browser
-```
-<script src="node_modules/k-http/dist/k-http.min.js"></script>
-```
 
 ## QuickStart
+
 ```javascript
-import kHttp from 'k-http'
+import kHttp from "k-http";
 
 kHttp
-    .get('/example.json')
-    .then(o => console.log(Object.keys(o))) // o will be the parsed object
-    .catch(e => console.error(e)) // e will be the responseText or status code
-    .finally(() => console.log('http request finished'))
+  .get("/example.json")
+  .then(o => console.log(o)) // The parsed object
+  .catch(e => console.error(e)) // Error object which message: responseText or statusText
+  .finally(() => console.log("http request finished"));
 ```
 
-## Methods
-- ```get(url: String, [options: Object])```
+## Documentation
 
-- ```post(url: String, [data: Any], [options: Object])```
+```typescript
+import Kxhr from "k-xhr";
 
-- ```put(url: String, [data: Any], [options: Object])```
+export as namespace kHttp;
 
-- ```del(url: String, [options: Object])```
+export interface HttpOptions {
+  withCredentials?: boolean;
+  onProgress?: (e: ProgressEvent) => void;
+  headers?: { [key: string]: string };
+}
 
-- ```then(h: Function)```
+export type Data =
+  | Document
+  | FormData
+  | ReadableStream
+  | Blob
+  | BufferSource
+  | URLSearchParams
+  | string
+  | null;
 
-- ```catch(h: Function)```
+export function get(url: string, options?: HttpOptions): Kxhr;
 
-- ```finally(h: Function)```
+export function head(url: string, options?: HttpOptions): Kxhr;
 
-```options``` are the same as ```k-xhr```
+export function post(url: string, data: Data, options?: HttpOptions): Kxhr;
+
+export function put(url: string, data: Data, options?: HttpOptions): Kxhr;
+
+export function patch(url: string, data: Data, options?: HttpOptions): Kxhr;
+
+export function del(url: string, options?: HttpOptions): Kxhr;
+
+export function connect(url: string, options?: HttpOptions): Kxhr;
+
+export function options(url: string, options?: HttpOptions): Kxhr;
+
+export function trace(url: string, options: HttpOptions): Kxhr;
+```
